@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consent Confirmation | Kate Farms</title>
+
+  <!-- Basis Grotesque -->
+  <style>
+    @font-face{
+      font-family:"Basis Grotesque";
+      src:
+        url("https://cdn.shopify.com/s/files/1/0205/6802/files/BasisGrotesquePro-Regular.woff2?v=1686258533") format("woff2"),
+        url("https://cdn.shopify.com/s/files/1/0205/6802/files/BasisGrotesquePro-Regular.woff?v=1686258533") format("woff");
+      font-weight:400;
+      font-style:normal;
+      font-display:swap;
+    }
+    @font-face{
+      font-family:"Basis Grotesque";
+      src:
+        url("https://cdn.shopify.com/s/files/1/0205/6802/files/BasisGrotesquePro-Bold.woff2?v=1686258533") format("woff2"),
+        url("https://cdn.shopify.com/s/files/1/0205/6802/files/BasisGrotesquePro-Bold.woff?v=1686258533") format("woff");
+      font-weight:700;
+      font-style:normal;
+      font-display:swap;
+    }
+
+    :root{
+      --kf-blue:#004469;
+      --kf-blue-light:#d4e7fa;
+      --text:#1b1b1b;
+      --text-muted:#555;
+      --bg:#ffffff;
+      --border:#d9d9d9;
+      --radius:12px;
+      --max-w:780px;
+      font-size:16px;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      padding-bottom: 80px;
+      font-family:"Basis Grotesque", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
+    }
+    header{
+      padding:32px 16px 16px;
+      text-align:center;
+      background:var(--kf-blue-light);
+      border-bottom:1px solid var(--border);
+    }
+    .logo{
+      display:inline-block;
+      max-width:180px;
+      height:auto;
+    }
+    main{
+      max-width:var(--max-w);
+      margin:32px auto;
+      padding:0 16px 48px;
+    }
+    h1{
+      margin:0 0 16px;
+      color:var(--kf-blue);
+      font-size:1.75rem;
+      font-weight:700;
+    }
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:28px 32px;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    }
+    .legal-copy{
+      margin:24px 0;
+      font-size:.9rem;
+      color:var(--text-muted);
+      border-left:4px solid var(--kf-blue);
+      padding-left:16px;
+    }
+    form{
+      margin-top:24px;
+    }
+    .consent-list{
+      margin:16px 0 24px;
+    }
+    button[type="submit"]{
+      background:var(--kf-blue);
+      color:#fff;
+      border:none;
+      padding:14px 28px;
+      font-family:"Basis Grotesque", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size:1rem;
+      border-radius:var(--radius);
+      cursor:pointer;
+      transition:opacity .2s ease, transform .08s ease;
+    }
+    button[type="submit"]:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+    button[type="submit"]:active{
+      transform:scale(.98);
+    }
+    footer{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding:24px 16px;
+      background:var(--kf-blue-light);
+      text-align:center;
+      font-size:.85rem;
+      color:var(--text-muted);
+    }
+    footer a{
+      color:var(--kf-blue);
+      font-family:"Basis Grotesque", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      text-decoration:none;
+    }
+    footer a:hover{
+      text-decoration:underline;
+    }
+    @media (max-width:480px){
+      .card{padding:22px 20px;}
+      h1{font-size:1.5rem;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://cdn.shopify.com/s/files/1/0205/6802/files/KF_Logo_Navy_TM.png?v=1693243153" alt="Kate Farms" class="logo" />
+</header>
+
+<main>
+  <h1>Confirm Your Consent</h1>
+
+  <div class="card" role="region" aria-labelledby="consent-heading">
+    <p id="consent-heading"><strong>Please review and confirm your selections.</strong></p>
+
+    <div class="legal-copy">
+      <p>By confirming, you acknowledge that you have read and agree to the <a href="https://assets.ctfassets.net/cmchsus15uq2/3nqZHXPWcl5bgpj2G9Bq9H/e864edee68eafad788a49457bdccd1a4/Kate_Farms_Sample_Program_Terms_Conditions.pdf">Sample Program Terms &amp; Conditions</a>, <a href="https://www.katefarms.com/policy/terms-of-use/">Terms of Use</a>, and <a href="https://www.katefarms.com/policy/privacy-policy/">Privacy Policy</a>. You certify you are authorized to provide this consent on behalf of your organization, if applicable. Additional disclosures and jurisdiction-specific notices can be inserted here.</p>
+    </div>
+
+    <form action="{{confirmConsent}}" method="POST" id="consentForm">
+      <div class="consent-list" id="consentListContainer">
+        {{consentList}}
+      </div>
+
+      <input type="hidden" name="consentSelections" id="consentSelections" />
+
+      <button type="submit" id="confirmBtn" disabled>Confirm Selections</button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> Kate Farms. All rights reserved. &middot;
+    <a href="https://www.katefarmsmedical.com">Back to katefarmsmedical.com</a>
+  </p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  (function(){
+    const form = document.getElementById('consentForm');
+    const btn = document.getElementById('confirmBtn');
+    const hidden = document.getElementById('consentSelections');
+    const container = document.getElementById('consentListContainer');
+
+    function getRequiredCheckboxes(){
+      return container.querySelectorAll('input[type="checkbox"][required], input[type="checkbox"][data-required="true"]');
+    }
+
+    function updateState(){
+      const boxes = getRequiredCheckboxes();
+      const allChecked = Array.from(boxes).every(cb => cb.checked);
+      btn.disabled = !allChecked;
+
+      if(hidden){
+        const selected = Array.from(container.querySelectorAll('input[type="checkbox"]:checked'))
+                              .map(cb => cb.value || cb.name);
+        hidden.value = JSON.stringify(selected);
+      }
+    }
+
+    container.addEventListener('change', updateState);
+    updateState();
+
+    form.addEventListener('submit', updateState);
+  })();
+</script>
+
+</body>
+</html>
